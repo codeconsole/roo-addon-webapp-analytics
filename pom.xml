@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.codeconsole.roo</groupId>
-  <artifactId>org.codeconsole.roo.addon.webappanalytics</artifactId>
+  <artifactId>org.codeconsole.roo.addon.webapp-analytics</artifactId>
   <packaging>bundle</packaging>
   <version>0.1.0.BUILD-SNAPSHOT</version>
   <name>Spring Roo - Addon - Webapp Analytics</name>
@@ -118,9 +118,9 @@
 	</dependency>       
   </dependencies>
   <scm>
-    <connection>scm:svn:https://${google.code.project.name}.googlecode.com/svn/trunk</connection>
-    <developerConnection>scm:svn:https://${google.code.project.name}.googlecode.com/svn/trunk</developerConnection>
-    <url>http://code.google.com/p/${google.code.project.name}/source/browse</url>
+    <connection>scm:git:ssh://git@github.com/codeconsole/roo-addon-webapp-analytics.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/codeconsole/roo-addon-webapp-analytics.git</developerConnection>
+    <url>https://github.com/codeconsole/roo-addon-webapp-analytics</url>
   </scm>
   <distributionManagement>
     <repository>
