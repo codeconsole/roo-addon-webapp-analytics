@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-stream="http://www.springframework.org/schema/integration/stream"
+	xmlns:int-ip="http://www.springframework.org/schema/integration/ip"
+	xmlns:int-mail="http://www.springframework.org/schema/integration/mail"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration/ip http://www.springframework.org/schema/integration/ip/spring-integration-ip.xsd
+		http://www.springframework.org/schema/integration/mail http://www.springframework.org/schema/integration/mail/spring-integration-mail.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-2.0.xsd
+		http://www.springframework.org/schema/integration/stream http://www.springframework.org/schema/integration/stream/spring-integration-stream-2.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<int:channel id="analyticsChannel" />
+
+	<int:gateway id="analyticsGateway" service-interface="org.codeconsole.web.analytics.integration.AnalyticsGateway" default-request-channel="analyticsChannel" />
+	
+	<int:chain input-channel="analyticsChannel">
+		<int:recipient-list-router>
+		<!-- Optional channels uncomment along with commented out segments below -->
+		<!--
+			<int:recipient channel="loggingChannel" />
+			<int:recipient channel="stdoutChannel" />
+			<int:recipient channel="objectsIn" />
+		-->
+			<int:recipient channel="mailOut" />
+		</int:recipient-list-router>
+	</int:chain>
+
+
+	<int:transformer input-channel="mailOut"
+		expression="payload.toHtmlString()" output-channel="mailOutEnrich" />
+
+	<int-mail:header-enricher input-channel="mailOutEnrich" output-channel="mailOutDeliver">
+		<int-mail:subject value="*** Analytics Report ***" />
+		<int-mail:from value="${email.username}" />
+		<int-mail:to value="${email.username}" />
+		<int-mail:content-type value="text/html"/>
+	</int-mail:header-enricher>
+
+	<int-mail:outbound-channel-adapter id="mailOutDeliver" mail-sender="mailSender" />
+
+	<!-- Uncomment if you use the Analytics server to record reports -->
+	<!--
+	<int:payload-serializing-transformer input-channel="objectsIn" output-channel="bytesOut"/>
+
+	<int-ip:udp-outbound-channel-adapter id="bytesOut"
+			host="225.6.7.8"
+			multicast="true"
+			port="11111"/>	
+	-->
+	
+	<!-- Uncomment to log reports -->
+	<!--
+	<int:logging-channel-adapter id="loggingChannel" expression="'************ ERROR FROM IP: ' + payload.ip" />
+	-->
+	
+	<!-- Uncomment to print to standard out -->
+	<!--
+	<int-stream:stdout-channel-adapter id="stdoutChannel" />
+	-->
+	
+	
+	<!-- This attempts to extract user information from a Spring Security user details object. -->
+	<!-- Uncomment if you have Spring Security installed -->
+	<!--
+	<bean id="userDetailsResolver" class="org.codeconsole.web.analytics.integration.SpringSecurityUserDetailsResolver" />
+	-->
+</beans>
