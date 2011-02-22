@@ -29,12 +29,24 @@ public class AnalyticsCommands implements CommandMarker {
 
 	@Reference private AnalyticsOperations analytics;
 
-	@CliAvailabilityIndicator("analytics setup") public boolean isInstallAnalyticsAvailable() {
-		return analytics.isInstallAnalyticsAvailable();
+	@CliAvailabilityIndicator("analytics setup") public boolean isSetupAnalyticsAvailable() {
+		return analytics.isInstallAnalyticsAvailable(false);
 	}
 
 	@CliCommand(value = "analytics setup", help = "Install Webapp Analytics into your project for tracking page performance.") 
-	public void installAnalytics() {
+	public void setupAnayltics() {
 		analytics.installAnalytics();
+	}	
+	
+	@CliAvailabilityIndicator("analytics info") public boolean isAnalyticsInfoAvailable() {
+		return true;
+	}
+
+	@CliCommand(value = "analytics info", help = "Determines if Webapp Analytics can be installed into your project.") 
+	public void analyticsInfo() {
+		logger.info("Determining Webapp Analytics Installation Requriements.");
+		if (analytics.isInstallAnalyticsAvailable(true)) {
+			logger.info("You are now able to install Webapp Analytics, run 'analytics setup' to install.");
+		}
 	}	
 }

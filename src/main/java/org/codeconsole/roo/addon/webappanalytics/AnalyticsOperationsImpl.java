@@ -39,23 +39,39 @@ public class AnalyticsOperationsImpl implements AnalyticsOperations{
 	@Reference private PathResolver pathResolver;
 	@Reference private ProjectOperations projectOperations;
 
-	public boolean isInstallAnalyticsAvailable() {
+	public boolean isInstallAnalyticsAvailable(boolean debug) {
 		ProjectMetadata project = (ProjectMetadata) metadataService.get(ProjectMetadata.getProjectIdentifier());
 		if (project == null) {
+			if (debug) {
+				logger.info("Please configure a project first. Run 'project'.");
+			}
 			return false;
 		}
 
 		// Do not permit installation unless they have a web project
 		if (!fileManager.exists(pathResolver.getIdentifier(Path.SRC_MAIN_WEBAPP, "/WEB-INF/web.xml"))) {
+			if (debug) {
+				logger.info("Please set up a web project. No web.xml has been found. The 'controller' command will do this for you.");
+			}			
 			return false;
 		}
 		
 		// Only permit if email is configured.
-		if (!isEmailConfigured())
+		if (!isEmailConfigured()) {
+			if (debug) {
+				logger.info("Please configure email first.  Run 'email sender setup'.");
+			}			
 			return false;
+		}
 
 		// Only permit installation if they don't already have some version of Webapp Analytics installed
-		return project.getDependenciesExcludingVersion(new Dependency("org.codeconsole", "webapp-analytics", "0.5.9")).size() == 0;
+		if (!(project.getDependenciesExcludingVersion(new Dependency("org.codeconsole", "webapp-analytics", "0.5.9")).size() == 0)) {
+			if (debug) {
+				logger.info("Webapp Analytics has already been installed.");
+			}
+			return false;
+		}
+		return true;
 	}
 
 	private boolean isEmailConfigured() {

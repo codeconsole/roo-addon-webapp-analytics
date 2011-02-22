@@ -6,6 +6,6 @@ package org.codeconsole.roo.addon.webappanalytics;
  */
 public interface AnalyticsOperations {
 	String ANALYTICS_FILTER_NAME = "analyticsFilter";
-	boolean isInstallAnalyticsAvailable();
+	boolean isInstallAnalyticsAvailable(boolean debug);
 	void installAnalytics();	
 }
