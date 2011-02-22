@@ -12,7 +12,7 @@ import org.springframework.roo.addon.web.mvc.controller.WebMvcOperations;
 import org.springframework.roo.metadata.MetadataService;
 import org.springframework.roo.process.manager.FileManager;
 import org.springframework.roo.process.manager.MutableFile;
-import org.springframework.roo.project.Dependency;
+import org.springframework.roo.project.maven.pom.Dependency;
 import org.springframework.roo.project.Path;
 import org.springframework.roo.project.PathResolver;
 import org.springframework.roo.project.ProjectMetadata;
@@ -133,7 +133,7 @@ public class AnalyticsOperationsImpl implements AnalyticsOperations{
 	private void updateDependencies(Element configuration) {
 		List<Element> analyticsDependencies = XmlUtils.findElements("/configuration/webapp-analytics/dependencies/dependency", configuration);
 		for (Element dependencyElement : analyticsDependencies) {
-			projectOperations.dependencyUpdate(new Dependency(dependencyElement));
+			projectOperations.addDependency(new Dependency(dependencyElement));
 		}
 	}	
 }
