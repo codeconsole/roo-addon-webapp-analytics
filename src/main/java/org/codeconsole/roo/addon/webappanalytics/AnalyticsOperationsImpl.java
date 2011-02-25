@@ -12,7 +12,7 @@ import org.springframework.roo.addon.web.mvc.controller.WebMvcOperations;
 import org.springframework.roo.metadata.MetadataService;
 import org.springframework.roo.process.manager.FileManager;
 import org.springframework.roo.process.manager.MutableFile;
-import org.springframework.roo.project.maven.pom.Dependency;
+import org.springframework.roo.project.Dependency;
 import org.springframework.roo.project.Path;
 import org.springframework.roo.project.PathResolver;
 import org.springframework.roo.project.ProjectMetadata;
@@ -30,7 +30,7 @@ import org.w3c.dom.Element;
  */
 @Component
 @Service
-public class AnalyticsOperationsImpl implements AnalyticsOperations{
+public class AnalyticsOperationsImpl implements AnalyticsOperations {
 
 	private static Logger logger = Logger.getLogger(AnalyticsOperations.class.getName());
 

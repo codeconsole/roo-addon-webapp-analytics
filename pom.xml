@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.codeconsole.roo</groupId>
-  <artifactId>org.codeconsole.roo.addon.webapp-analytics</artifactId>
+  <artifactId>org.codeconsole.roo.addon.webappanalytics</artifactId>
   <packaging>bundle</packaging>
   <version>0.1.1-SNAPSHOT</version>
   <name>Spring Roo - Addon - Webapp Analytics</name>
@@ -19,7 +19,7 @@
   <description>An add-on that enables webapp analytics and error tracking.</description>
   <url>http://www.codeconsole.org</url>
   <properties>
-    <roo.version>1.1.2.BUILD-SNAPSHOT</roo.version>
+    <roo.version>1.1.2.RELEASE</roo.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <google.code.project.name>codeconsole</google.code.project.name>
     <repo.folder>org/codeconsole/roo</repo.folder>
